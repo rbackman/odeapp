@@ -1,0 +1,17 @@
+# config file
+
+#global parameters for physical humanoid
+#Robert Backman 10/23/2010
+
+parameters
+{
+
+	skel =  "../data/Man.s" ; 
+	ref =  "../data/Man.s" ; 
+	dataDir = "../data/" ;
+	fmt = ".ph";
+	default = "config";
+	configurations = "default" "current" "walking" "jumping" "onefoot" "default" "currentgood";
+}
+
+end

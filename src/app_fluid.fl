@@ -1,0 +1,564 @@
+# data file for the FLTK User Interface Designer (FLUID)
+version 2.1000 
+images_dir fltk::LightButton 
+header_name {.h} 
+code_name {.cpp} 
+gridx 5 
+gridy 5 
+snap 3
+decl {\# include "gsim/fl_viewer.h"} {public
+} 
+
+decl {\# include "app_events.h"} {public
+} 
+
+decl {\# include "app_viewer.h"} {public
+} 
+
+class AppFluid {open
+} {
+  decl {virtual void event ( AppEvent e )=0;} {public
+  }
+  Function {AppFluid()} {open
+  } {
+    {fltk::Window} ui_window {
+      label {Physical Human} open
+      xywh {6 30 1442 820} vertical resizable visible
+    } {
+      {fltk::TiledGroup} {} {open
+        xywh {0 0 1438 820}
+      } {
+        {fltk::Group} ui_viewer {
+          xywh {290 0 1148 815} box DOWN_BOX color 0xd3d3d300
+          class AppViewer
+        } {}
+        {fltk::Group} ui_main_group {open
+          xywh {0 0 285 820} box FLAT_BOX color 0x9b9b9b00
+        } {
+          {fltk::InvisibleBox} {} {
+            xywh {0 20 285 40} box DOWN_BOX buttonbox DOWN_BOX color 0x9d9d9d00 buttoncolor 0xc7c7c700
+          }
+          {fltk::MenuBar} {} {
+            xywh {13 0 272 20} color 0x9b9b9b00 buttoncolor 0x9b9b9b00 highlight_color 0x9b9b9b00
+          } {
+            {fltk::Item} {} {
+              label X
+              callback {event ( evQuit );}
+              labelfont 1 textfont 1 color 0xece9d800 textcolor 0xd40d2900 selection_textcolor 0xff122b00
+            }
+            {fltk::ItemGroup} {} {
+              label draw open
+              color 0xece9d800
+            } {}
+            {fltk::ItemGroup} {} {
+              label edit
+              color 0xece9d800
+            } {
+              {fltk::Item} {} {
+                label parmeters
+                callback {event ( evEditParameters );}
+                }
+            }
+            {fltk::ItemGroup} {} {
+              label Char
+              } {
+              {fltk::Divider} {} {
+                }
+              {fltk::Item} {} {
+                label {double stance}
+                callback {event(evDoubleStance);}
+                }
+              {fltk::Item} {} {
+                label {left foot}
+                callback {event(evLeftStance);}
+                }
+              {fltk::Item} {} {
+                label {right foot}
+                callback {event(evRightStance);}
+                }
+              {fltk::Item} {} {
+                label {Load Defaults}
+                callback {event(evLoadDefault);}
+                }
+              {fltk::Item} {} {
+                label Fun
+                callback {event(evDropBalls);}
+                tooltip {Drop a few balls on our unsuspecting victim..}
+                }
+            }
+          }
+          {fltk::Group} {} {open
+            xywh {0 60 285 755} resizable box DOWN_BOX color 0xb6b6b600
+          } {
+            {fltk::TabGroup} ui_main_tab {open
+              xywh {0 0 280 755} resizable box DOWN_BOX color 0xc5c5c500
+            } {
+              {fltk::Group} {} {
+                label Controllers open
+                xywh {0 20 270 725} labelfont 1 labelsize 11 textsize 11
+              } {
+                {fltk::Group} {} {
+                  label {Velocity Controller}
+                  tooltip {Virtual control of the COM of the character}
+                  xywh {15 85 250 125} align 33 box DOWN_BOX color 0xd3d3d300
+                } {
+                  {fltk::CheckButton} ui_useComJ {
+                    label vcont
+                    callback {event(evControlMethods);}
+                    xywh {10 20 25 25} value 1
+                  }
+                  {fltk::InvisibleBox} {} {
+                    label Sagital
+                    xywh {80 25 75 85} align 33 box DOWN_BOX buttonbox NO_BOX
+                  }
+                  {fltk::ValueInput} ui_jkp {
+                    label jk_P
+                    callback {event(evControlMethods);}
+                    xywh {115 45 35 20} maximum 100 step 0.1 value 15
+                  }
+                  {fltk::ValueInput} ui_jkd {
+                    label jk_D
+                    callback {event(evControlMethods);}
+                    xywh {115 65 35 20} maximum 100 step 0.1 value 5
+                  }
+                  {fltk::InvisibleBox} {} {
+                    label Coronal
+                    xywh {155 25 70 85} align 33 box DOWN_BOX buttonbox NO_BOX
+                  }
+                  {fltk::ValueInput} ui_jkpc {
+                    label jk_P
+                    callback {event(evControlMethods);}
+                    xywh {190 45 35 20} maximum 100 step 0.1 value 25
+                  }
+                  {fltk::ValueInput} ui_jkdc {
+                    label jk_D
+                    callback {event(evControlMethods);}
+                    xywh {190 65 35 20} maximum 100 step 0.1 value 5
+                  }
+                  {fltk::ValueInput} ui_vs {
+                    label Vz
+                    callback {event(evControlMethods);}
+                    xywh {115 85 35 20} maximum 10 step 0.1
+                  }
+                  {fltk::ValueInput} ui_vc {
+                    label Vx
+                    callback {event(evControlMethods);}
+                    xywh {190 85 35 20} maximum 10 step 0.1
+                  }
+                  {fltk::CheckButton} ui_useBubbleT {
+                    label bub
+                    callback {event(evControlMethods);}
+                    xywh {10 45 25 25} value 1
+                  }
+                }
+                {fltk::Group} {} {
+                  label Walk open
+                  tooltip {make the character walk around}
+                  xywh {15 220 250 140} align 33 box DOWN_BOX color 0xd3d3d300
+                } {
+                  {fltk::Dial} ui_walk_dir {
+                    callback {event(evWalkAdjust);}
+                    xywh {10 10 68 65} minimum -1
+                  }
+                  {fltk::LightButton} ui_walk {
+                    label Walk
+                    callback {event(evWalk);}
+                    xywh {15 75 55 25}
+                  }
+                  {fltk::ValueSlider} ui_walk_speed {
+                    label {Walk Speed}
+                    callback {event(evWalkAdjust);}
+                    xywh {150 50 90 15} align 4 maximum 10 value 0.01
+                  }
+                  {fltk::CheckButton} ui_arrow {
+                    label arrow
+                    callback {event(evWalkAdjust);}
+                    xywh {175 105 25 25}
+                  }
+                  {fltk::ValueSlider} ui_step_dist {
+                    label {Step Dist}
+                    callback {event(evWalkAdjust);}
+                    xywh {150 20 90 15} align 4 maximum 10 value 0.5
+                  }
+                  {fltk::ValueSlider} ui_step_height {
+                    label {Step Height}
+                    callback {event(evWalkAdjust);}
+                    xywh {150 35 90 15} align 4 maximum 10 value 0.5
+                  }
+                  {fltk::ValueSlider} ui_step_speed {
+                    label {Step Speed}
+                    callback {event(evWalkAdjust);}
+                    xywh {150 65 90 15} align 4 maximum 10 value 0.01
+                  }
+                  {fltk::Group} ui_message {
+                    label {Doesn't Work Yet}
+                    xywh {55 115 115 20} align 32 box FLAT_BOX labelfont 1 textfont 1 color 0xd3d3d300 textcolor 0xa7000000 labelcolor 0xbd000000 labelsize 11 textsize 11
+                  } {}
+                  {fltk::ValueSlider} ui_walk_sway {
+                    label {Hip Sway}
+                    callback {event(evWalkAdjust);}
+                    xywh {150 80 90 15} align 4 value 0.5
+                  }
+                  {fltk::ValueSlider} ui_walk_hheight {
+                    label {Hip Height}
+                    callback {event(evWalkAdjust);}
+                    xywh {150 95 90 15} align 4 minimum 3 maximum 4.2 step 0.05 value 4.15
+                  }
+                  {fltk::Button} {} {
+                    label Step
+                    callback {event(evStartStep);}
+                    xywh {15 105 35 25}
+                  }
+                }
+                {fltk::Group} {} {
+                  tooltip {Random Stuff}
+                  xywh {15 15 250 60} box DOWN_BOX color 0xd3d3d300
+                } {
+                  {fltk::CheckButton} ui_useGravC {
+                    label gravC
+                    callback {event(evControlMethods);}
+                    xywh {10 30 25 25}
+                  }
+                  {fltk::CheckButton} ui_usePID {
+                    label Reference
+                    callback {event(evControlMethods);}
+                    xywh {10 10 25 25} value 1
+                  }
+                  {fltk::Button} {} {
+                    label rest
+                    callback {event(evRest);}
+                    tooltip {This applies a force to each of the bodies opposite its velocity.. use with caution ;-)}
+                    xywh {210 10 35 20}
+                  }
+                  {fltk::ValueInput} ui_kg {
+                    label G
+                    callback {event(evControlMethods);}
+                    xywh {82 33 30 20} step 0.1 value 0.3
+                  }
+                  {fltk::CheckButton} ui_collide_feet_only {
+                    label {Feet Only}
+                    callback {event(evControlMethods);}
+                    tooltip {Disables collision on all bodies except feet toes and ground}
+                    xywh {95 10 25 25} value 1
+                  }
+                  {fltk::CheckButton} ui_root_manip {
+                    label Manip
+                    callback {event(evManip);}
+                    tooltip {Allow the user control over the IK root.. can be dangerous}
+                    xywh {125 30 25 25} value 1
+                  }
+                }
+                {fltk::Group} {} {
+                  label Contact open
+                  tooltip {Change how the character is standing}
+                  xywh {15 380 250 95} align 33 box DOWN_BOX color 0xd3d3d300
+                } {
+                  {fltk::Group} ui_stepState {
+                    label text
+                    xywh {25 70 210 20} align 32 box FLAT_BOX labelfont 1 textfont 1 textcolor 0xa7000000 labelcolor 0xbd000000 labelsize 11 textsize 11
+                  } {}
+                  {fltk::Button} {} {
+                    label {Left Foot}
+                    callback {event(evLeftStance);}
+                    xywh {40 20 65 25}
+                  }
+                  {fltk::Button} {} {
+                    label {Right Foot}
+                    callback {event(evRightStance);}
+                    xywh {170 20 65 25}
+                  }
+                  {fltk::Button} {} {
+                    label {Both Feet}
+                    callback {event(evDoubleStance);}
+                    xywh {105 20 65 25}
+                  }
+                  {fltk::Button} {} {
+                    label Toes
+                    callback {event(evToeStance);}
+                    xywh {40 45 65 25}
+                  }
+                  {fltk::Button} {} {
+                    label Heel
+                    callback {event(evHeelStance);}
+                    xywh {105 45 65 25}
+                  }
+                  {fltk::Button} {} {
+                    label Fixed
+                    callback {event(evFixedStance);}
+                    xywh {170 45 65 25}
+                  }
+                  {fltk::CheckButton} ui_contactVis {
+                    label vis
+                    callback {event(evControlMethods);} selected
+                    xywh {10 5 25 25}
+                  }
+                }
+                {fltk::Group} {} {
+                  label Configurations open
+                  tooltip {Load different configurations for the controllers}
+                  xywh {15 485 250 155} align 33 box DOWN_BOX color 0xd3d3d300
+                } {
+                  {fltk::Browser} ui_config_browser {
+                    callback {event(evParmListSelected);}
+                    xywh {20 30 215 65} type Multi
+                  } {}
+                  {fltk::Button} {} {
+                    label save
+                    callback {event(evSaveParm);}
+                    xywh {60 100 40 20}
+                  }
+                  {fltk::Button} {} {
+                    label update
+                    callback {event(evUpdateParm);}
+                    xywh {20 120 40 20}
+                  }
+                  {fltk::Button} {} {
+                    label load
+                    callback {event(evLoadParm);}
+                    xywh {20 100 40 20}
+                  }
+                  {fltk::Button} {} {
+                    label delete
+                    callback {event(evDeleteParm);}
+                    xywh {60 120 40 20}
+                  }
+                  {fltk::Input} ui_current_parm {
+                    xywh {115 110 105 25}
+                  }
+                }
+                {fltk::Group} {} {
+                  label Root open
+                  tooltip {This Controller Attempts to keep the hips and the swing leg relative to a global coordinate system}
+                  xywh {15 650 250 75} align 33 box DOWN_BOX color 0xd3d3d300
+                } {
+                  {fltk::CheckButton} ui_use_root {
+                    label root
+                    callback {event(evControlMethods);}
+                    xywh {20 30 25 25}
+                  }
+                  {fltk::ValueInput} ui_root_kp {
+                    label kp
+                    callback {event(evControlMethods);}
+                    xywh {85 20 45 25} value 0.8
+                  }
+                  {fltk::ValueInput} ui_root_kd {
+                    label kd
+                    callback {event(evControlMethods);}
+                    xywh {190 20 45 25} value 0.1
+                  }
+                  {fltk::ValueInput} ui_root_maxV {
+                    label maxV
+                    callback {event(evControlMethods);}
+                    xywh {85 45 45 25} value 3
+                  }
+                  {fltk::ValueInput} ui_root_damp {
+                    label rootDamp
+                    callback {event(evControlMethods);}
+                    xywh {190 45 45 25} value 3
+                  }
+                }
+              }
+              {fltk::Group} {} {
+                label Skel
+                xywh {10 25 270 725} hide
+              } {
+                {fltk::InvisibleBox} {} {
+                  label {skel pid}
+                  xywh {0 45 240 360} align 33 box DOWN_BOX buttonbox DOWN_BOX color 0xcacaca00
+                }
+                {fltk::ValueSlider} {ui_jnt[0]} {
+                  label {L Shoulder X}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 65 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[1]} {
+                  label {L Shoulder Z}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 80 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[2]} {
+                  label {R Shoulder X}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 95 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[3]} {
+                  label {R Shoulder Z}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 110 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[4]} {
+                  label {L Elbow}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 125 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[5]} {
+                  label {R Elbow}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 141 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[6]} {
+                  label {L Hip X}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 156 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[7]} {
+                  label {L Hip Z}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 171 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[8]} {
+                  label {R Hip X}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 186 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[9]} {
+                  label {R Hip Z}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 202 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[10]} {
+                  label {L Knee}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 217 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[11]} {
+                  label {R Knee}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 232 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[12]} {
+                  label {L Ankle}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 247 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[13]} {
+                  label {R Ankle}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 263 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[14]} {
+                  label Neck
+                  callback {event(evSkelAdjust);}
+                  xywh {90 278 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[15]} {
+                  label {Spine X}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 293 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[16]} {
+                  label {Spine Z}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 308 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[17]} {
+                  label {Spine 2 X}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 320 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[18]} {
+                  label {Spine 2 Z}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 335 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[19]} {
+                  label {Left Toe}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 350 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::ValueSlider} {ui_jnt[20]} {
+                  label {Right Toe}
+                  callback {event(evSkelAdjust);}
+                  xywh {90 365 145 15} align 4 minimum -200 maximum 200 step 1
+                }
+                {fltk::CheckButton} ui_showSkel {
+                  label {Skel Visible}
+                  callback {event(evControlMethods);}
+                  xywh {20 0 25 25}
+                }
+                {fltk::CheckButton} ui_shaded {
+                  label {Models Shaded}
+                  callback {event(evControlMethods);}
+                  xywh {20 20 25 25} value 1
+                }
+              }
+              {fltk::Group} {} {
+                label Joint
+                xywh {5 30 270 725} hide
+              } {
+                {fltk::Browser} ui_jointList {
+                  label Joint
+                  callback {event(evJointListSelect);}
+                  xywh {25 40 195 285} type Multi
+                } {}
+                {fltk::ValueSlider} ui_jointP {
+                  label P
+                  callback {event(evIndividualJointAdjust);}
+                  xywh {40 345 175 20} align 4 maximum 5 step 0.001 value 0.3
+                }
+                {fltk::ValueSlider} ui_jointD {
+                  label D
+                  callback {event(evIndividualJointAdjust);}
+                  xywh {40 360 175 20} align 4 maximum 0.1 step 0.0001 value 0.01
+                }
+                {fltk::CheckButton} ui_jointGrav {
+                  label {Gravity Compensate}
+                  callback {event(evIndividualJointAdjust);}
+                  xywh {39 382 175 20}
+                }
+                {fltk::CheckButton} ui_jointPD {
+                  label PD
+                  callback {event(evIndividualJointAdjust);}
+                  xywh {40 400 175 20}
+                }
+                {fltk::Button} {} {
+                  label Save
+                  callback {event(evSaveConfig);}
+                  xywh {35 515 80 20}
+                }
+                {fltk::Button} {} {
+                  label Load
+                  callback {event(evLoadConfig);}
+                  xywh {125 515 80 20}
+                }
+                {fltk::CheckButton} ui_jointVf {
+                  label vforce
+                  callback {event(evIndividualJointAdjust);}
+                  xywh {40 420 175 20}
+                }
+                {fltk::ValueSlider} ui_jointJX {
+                  label jX
+                  callback {event(evIndividualJointAdjust);}
+                  xywh {35 440 175 20} align 4 minimum -5 maximum 5 value 1
+                }
+                {fltk::ValueSlider} ui_jointJY {
+                  label jY
+                  callback {event(evIndividualJointAdjust);}
+                  xywh {35 460 175 20} align 4 minimum -5 maximum 5 value 1
+                }
+                {fltk::ValueSlider} ui_jointJZ {
+                  label jZ
+                  callback {event(evIndividualJointAdjust);}
+                  xywh {35 480 175 20} align 4 minimum -5 maximum 5 value 1
+                }
+                {fltk::Group} ui_multiSelect {open
+                  xywh {30 0 191 25} align 32 box FLAT_BOX labelfont 1 textfont 1 color 0xb6b6b600 textcolor 0xa7000000 labelcolor 0xbd000000 labelsize 11 textsize 11
+                } {}
+              }
+            }
+          }
+          {fltk::LightButton} ui_ode_run {
+            label {Run Sim}
+            callback {event(evRunOde);}
+            xywh {32 25 112 30} value 1
+          }
+          {fltk::Button} {} {
+            label {Reset Sim}
+            callback {event(evOdeReset);}
+            xywh {170 25 105 30}
+          }
+        }
+      }
+    }
+  }
+} 
